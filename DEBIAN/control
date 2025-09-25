@@ -1,0 +1,9 @@
+Package: GNetWork
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: 
+Maintainer: xirin1337
+Description: cls networks...
+

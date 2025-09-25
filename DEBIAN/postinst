@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+nasha=false # Nasha file tota
+nashaLoadCount=0 #File copy
+
+# Получаем имя пользователя, который выполняет установку
+HOME_DIR=/home/$(getent passwd "$SUDO_USER" | cut -d: -f1)
+
+isFile() {
+	nasha=$1
+	if [ -f $nasha ]; then
+		nasha=$(basename $nasha)
+	else
+		nasha=false
+	fi
+}
+
+# cfg...
+if [ ! -d $HOME_DIR/.config/GNetWork ]; then
+	mkdir $HOME_DIR/.config/GNetWork
+fi
+
+echo "[CFG] -> [EVENT] = PROCESS FILES COPY..."
+for i in `ls /usr/bin/Cfg-GNetWork`
+do
+	isFile $HOME_DIR/.config/GNetWork/$i
+	if [[ $i != $nasha ]]
+	then
+		nashaLoadCount=$(($nashaLoadCount + 1))
+		echo "[CFG] [$nashaLoadCount] -> [+] = GNetWork/$i"
+		cp /usr/bin/Cfg-GNetWork/$i $HOME_DIR/.config/GNetWork/$i
+	fi
+done
+
+if [ $nashaLoadCount -gt 0 ]; then
+	echo "[CFG] [$nashaLoadCount] -> [EVENT] = PROCESS FILES COPY SUCCESS :)"
+else
+	echo "[CFG] [$nashaLoadCount] -> [EVENT] = PROCESS FILES COPY NO COPY NO WORK :)"
+fi
+echo "please start execute file -> GNetWork"
