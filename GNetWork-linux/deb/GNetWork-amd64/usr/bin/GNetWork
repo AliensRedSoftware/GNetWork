@@ -106,7 +106,7 @@ do
 done
 
 # sound effect cls success
-sh -c "play -t mp3 -v 0.20 ~/.config/GNetWork/notify.mp3"
+play -t mp3 -v 0.20 ~/.config/GNetWork/notify.mp3
 
 PTIMEOUT=~/.config/GNetWork/resetTimeOut.cfg
 
@@ -117,7 +117,7 @@ if [ -f $PTIMEOUT ]; then
 		PIDAS=$(pgrep GNetWork)
 		sleep $TIMEOUT
 		GNetWork &
-		kill -KILL $PIDAS
+		sudo kill -KILL $PIDAS
 	fi
 fi
 
