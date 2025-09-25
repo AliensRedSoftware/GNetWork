@@ -13,9 +13,9 @@ GNetWork - Generate NetWork linux
 * change sound effect -> `~/.config/GNetWork/notify.mp3`
 * change resetTimeOut repeat -> `~/.config/GNetWork/resetTimeOut.cfg / (Default 60sec - 1min)`
 
-# install manual
+# install manual (Ubuntu clone debian)
 0. please install cmd terminal (Ubuntu clone Deb) -> `sudo dpkg -i GNetWork-linux.deb`
-1. Use terminal cmd GNetWork :)
+1. Use terminal cmd `GNetWork` :)
 2. success :)
 
 # build project deb (Ubuntu clone debian)
