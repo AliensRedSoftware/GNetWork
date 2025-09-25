@@ -14,7 +14,7 @@ GNetWork - Generate NetWork linux
 * change resetTimeOut repeat -> `~/.config/GNetWork/resetTimeOut.cfg / (Default 60sec - 1min)`
 
 # install manual (Ubuntu clone debian)
-0. please install cmd terminal (Ubuntu clone Deb) -> `sudo dpkg -i GNetWork-deb-{arhiticle}.deb` / example `sudo dpkg -i GNetWork-deb-amd64.deb`
+0. please install cmd terminal (Ubuntu clone Deb) -> `sudo dpkg -i GNetWork-deb-{arhiticle}.{arhiticle}` / example `sudo dpkg -i GNetWork-deb-amd64.deb`
 1. Use terminal cmd `GNetWork` :)
 2. success :)
 
