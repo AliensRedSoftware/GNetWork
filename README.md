@@ -18,7 +18,7 @@
 
 # cfg Конфигурация
 * change sound effect -> `~/.config/GNetWork/notify.mp3`
-* change resetTimeOut repeat -> `~/.config/GNetWork/resetTimeOut.cfg / (Default 60sec - 1min)`
+* change resetTimeOut repeat -> `~/.config/GNetWork/resetTimeOut.cfg / (Default 500sec - 8m && 20second)`
 
 # install manual (Ubuntu clone debian)
 0. please install cmd terminal (Ubuntu clone Deb) -> `sudo dpkg -i GNetWork-deb-{arhiticle}.{arhiticle}` / example `sudo dpkg -i GNetWork-deb-amd64.deb`
