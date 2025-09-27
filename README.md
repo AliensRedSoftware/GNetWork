@@ -1,5 +1,11 @@
 # desc
-GNetWork - Generate NetWork linux
+* GNetWork - Generate NetWork linux
+
+# effect
+* Generate Random Host
+* wipe networks
+* effect sound notify
+* Generate mac_address
 
 # Доп.Конфигурация для роутера нужная если че
 0. open default webbrouser
