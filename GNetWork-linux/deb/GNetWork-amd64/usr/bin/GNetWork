@@ -104,12 +104,21 @@ sudo nmcli -g name,type connection show --active | awk -F: '/ethernet|wireless/ 
 do
 	# settings eth
 	dev=$(sudo nmcli -g GENERAL.DEVICES con show "$connection" | while read dev; do sudo nmcli -g GENERAL.IP-IFACE device show "$dev"; done)
+	dns4=$(sudo nmcli -g IPV4.DNS con show "$connection")
+	#remove device
 	sudo nmcli connection delete "$connection"
 
 	sudo nmcli connection add type ethernet con-name "$connection" ifname $dev
  
 	# settings eth
 	sudo nmcli con mod "$connection" ipv6.method disabled
+	sudo nmcli con mod "$connection" ipv6.ignore-auto-dns yes
+	sudo nmcli con mod "$connection" ipv4.ignore-auto-dns yes
+	
+	# cfg dns4 ipv4
+	if [ ! -z "$dns4" ]; then
+		sudo nmcli con mod "$connection" ipv4.dns "$dns4"
+	fi
 
 	# con eth
 	sudo nmcli con down "$connection" && sudo nmcli con up "$connection"
