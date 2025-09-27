@@ -5,7 +5,7 @@
 * Generate Random Host
 * wipe networks
 * effect sound notify
-* Generate mac_address
+* Generate random mac_address
 
 # Доп.Конфигурация для роутера нужная если че
 0. open default webbrouser
