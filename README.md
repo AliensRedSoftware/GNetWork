@@ -5,7 +5,7 @@
 * Generate Random Host
 * wipe networks
 * effect sound notify
-* sleep start GNetWork :)
+* sleep :)
 * Generate random mac_address
 
 # Доп.Конфигурация для роутера нужная если че
