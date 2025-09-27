@@ -113,10 +113,10 @@ do
 	# settings eth
 	sudo nmcli con mod "$connection" ipv6.method disabled
 	sudo nmcli con mod "$connection" ipv6.ignore-auto-dns yes
-	sudo nmcli con mod "$connection" ipv4.ignore-auto-dns yes
 	
 	# cfg dns4 ipv4
 	if [ ! -z "$dns4" ]; then
+		sudo nmcli con mod "$connection" ipv4.ignore-auto-dns yes
 		sudo nmcli con mod "$connection" ipv4.dns "$dns4"
 	fi
 
