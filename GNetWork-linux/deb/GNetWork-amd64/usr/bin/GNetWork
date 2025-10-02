@@ -1,4 +1,24 @@
 #!/bin/bash
+# pckg
+macAddress=`dpkg -s "macchanger" | grep "Status" ` #проверяем состояние пакета (dpkg) и ищем в выводе его статус (grep)
+if [ ! -n "$macAddress" ] #проверяем что нашли строку со статусом (что строка не пуста)
+then
+	sudo apt --assume-no install macchanger
+fi
+
+NetWorkType=false
+
+getTypeNetWorkManager() {
+	NetWorkType=$(sudo nmcli -g connection.type con show "$1")
+	if [[ $NetWorkType == "802-3-ethernet" ]]
+	then
+		NetWorkType="ethernet"
+	fi
+}
+
+#lo update
+loopback=$(ip route get 127.0.0.1 | awk '{print $4}')
+sudo macchanger -r $loopback
 
 # update name...
 sudo sh -c "echo $(uuidgen) > /proc/sys/kernel/hostname"
@@ -99,28 +119,41 @@ rohc	142	ROHC		# Robust Header Compression"
 sudo sh -c "echo '$SPROTOCOLS' > /etc/protocols"
 sudo systemctl restart NetworkManager
 
-# reload devices networks eth
-sudo nmcli -g name,type connection show --active | awk -F: '/ethernet|wireless/ { print $1 }' | while read connection
+# reload devices networks eth, wifi
+sudo nmcli -g name connection show --active | while read connection
 do
-	# settings eth
-	dev=$(sudo nmcli -g GENERAL.DEVICES con show "$connection" | while read dev; do sudo nmcli -g GENERAL.IP-IFACE device show "$dev"; done)
-	dns4=$(sudo nmcli -g IPV4.DNS con show "$connection")
-	#remove device
-	sudo nmcli connection delete "$connection"
+	#type gets nm
+	getTypeNetWorkManager $connection
 
-	sudo nmcli connection add type ethernet con-name "$connection" ifname $dev
- 
-	# settings eth
-	sudo nmcli con mod "$connection" ipv6.method disabled
-	sudo nmcli con mod "$connection" ipv6.ignore-auto-dns yes
-	
-	# cfg dns4 ipv4
-	if [ ! -z "$dns4" ]; then
-		sudo nmcli con mod "$connection" ipv4.ignore-auto-dns yes
-		sudo nmcli con mod "$connection" ipv4.dns "$dns4"
+	if [[ $NetWorkType == "ethernet" ]]
+	then
+		# settings eth
+		dev=$(sudo nmcli -g GENERAL.DEVICES con show "$connection" | while read dev; do sudo nmcli -g GENERAL.IP-IFACE device show "$dev"; done)
+		dns4=$(sudo nmcli -g IPV4.DNS con show "$connection")
+		#remove device
+		Ndev=$(echo $RANDOM | md5sum | head -c 10; echo;)
+		sudo ip link set dev $dev down
+		sudo ip link set dev $dev name $Ndev
+		sudo ip link set dev $Ndev up
+		sudo nmcli connection delete "$connection"
+
+		sudo nmcli connection add type ethernet con-name "$connection" ifname $Ndev
+	 
+		# settings eth
+		sudo nmcli con mod "$connection" ipv6.method disabled
+		sudo nmcli con mod "$connection" ipv6.ignore-auto-dns yes
+		
+		# cfg dns4 ipv4
+		if [ ! -z "$dns4" ]; then
+			sudo nmcli con mod "$connection" ipv4.ignore-auto-dns yes
+			sudo nmcli con mod "$connection" ipv4.dns "$dns4"
+		fi
 	fi
-
-	# con eth
+	#if [[ $NetWorkType == "tun" ]]
+	#then
+		
+	#fi
+	# con
 	sudo nmcli con down "$connection" && sudo nmcli con up "$connection"
 done
 

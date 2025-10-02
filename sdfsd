@@ -1,0 +1,17 @@
+NetWorkType=false
+
+getTypeNetWorkManager() {
+	NetWorkType=$(sudo nmcli -g connection.type con show "$1")
+	if [[ $NetWorkType == "802-3-ethernet" ]]
+	then
+		NetWorkType="ethernet"
+	fi
+}
+
+
+sudo nmcli -g name connection show --active | while read connection
+do
+	getTypeNetWorkManager $connection
+	echo $NetWorkType
+done
+sudo nmcli connection add type tun con-name "test" ifname sss

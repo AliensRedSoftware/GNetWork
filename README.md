@@ -30,6 +30,6 @@
 1. path change please `cd GNetWork-linux/{destribitian}` / example `cd GNetWork-linux/deb`
 2. build project deb -> `sudo dpkg-deb --build GNetWork-{arhiticle}` / example `sudo dpkg-deb --build GNetWork-amd64`
 3. result file install deb -> `sudo dpkg -i GNetWork-{arhiticle}.deb` / example `sudo dpkg -i GNetWork-amd64.deb`
-4. Use terminal cmd GNetWork :)
+1. Use terminal cmd `GNetWork` :)
 5. success :)
 
