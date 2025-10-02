@@ -7,6 +7,7 @@
 * effect sound notify
 * effect sleep
 * Generate random mac_address
+* Generate Random name eth
 
 # Доп.Конфигурация для роутера нужная если че
 0. open default webbrouser
